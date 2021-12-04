@@ -22,8 +22,18 @@ public class LogFilter {
         return strings;
     }
 
+    public static void save(List<String> log, String file) {
+        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
+            for (String str : log) {
+                pw.println(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         List<String> log = filter("log.txt");
-        log.forEach(System.out::println);
+        save(log, "404.txt");
     }
 }
