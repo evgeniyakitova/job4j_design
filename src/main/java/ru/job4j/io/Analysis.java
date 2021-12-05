@@ -11,12 +11,12 @@ public class Analysis {
             String str = in.readLine();
             while (str != null) {
                 String[] state = str.split(" ");
-                if ((state[0].equals("400") || state[0].equals("500")) && isWork) {
+                if (("400".equals(state[0]) || "500".equals(state[0])) && isWork) {
                     isWork = false;
                     period.append(state[1]);
                     period.append(";");
                 }
-                if ((state[0].equals("200") || state[0].equals("300")) && !isWork) {
+                if (("200".equals(state[0]) || "300".equals(state[0])) && !isWork) {
                     period.append(state[1]);
                     out.println(period);
                     isWork = true;
