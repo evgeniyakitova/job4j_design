@@ -3,7 +3,7 @@ package ru.job4j.io;
 import java.io.*;
 
 public class Analysis {
-    public void unavailable(String source, String target) {
+    public static void unavailable(String source, String target) {
         try (BufferedReader in = new BufferedReader(new FileReader(source));
              PrintWriter out = new PrintWriter(new FileWriter(target))) {
             boolean isWork = true;
@@ -27,10 +27,5 @@ public class Analysis {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        Analysis analysis = new Analysis();
-        analysis.unavailable("server.log", "target.txt");
     }
 }
