@@ -25,9 +25,10 @@ public class SimpleMapTest {
     public void whenPutAndKeysAreUsers() {
         Map<User, String> map = new SimpleMap<>();
         Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(1461518397788L);
         assertTrue(map.put(new User("Katya", 2, date), "First value"));
         assertFalse(map.put(new User("Katya", 2, date), "Second value"));
-        assertTrue(map.put(new User("Petr", 1, Calendar.getInstance()), "Third value"));
+        assertTrue(map.put(new User("Petr", 1, date), "Third value"));
     }
 
     @Test
