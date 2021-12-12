@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -49,7 +50,7 @@ public class ConsoleChat {
 
     private List<String> readPhrases() {
         List<String> phrases = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader(botAnswers))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(botAnswers, StandardCharsets.UTF_8))) {
             in.lines().forEach(phrases::add);
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,7 +59,7 @@ public class ConsoleChat {
     }
 
     private void saveLog(List<String> log) {
-        try (PrintWriter out = new PrintWriter(path)) {
+        try (PrintWriter out = new PrintWriter(path, StandardCharsets.UTF_8)) {
             log.forEach(out::println);
         } catch (IOException e) {
             e.printStackTrace();
