@@ -25,6 +25,28 @@ public class Person {
         this.contact = contact;
         this.children = children;
     }
+    public String getName() {
+        return name;
+    }
+
+
+    public boolean getIsMarried() {
+        return isMarried;
+    }
+
+
+    public int getAge() {
+        return age;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+
+    public String[] getChildren() {
+        return children;
+    }
 
     @Override
     public String toString() {
