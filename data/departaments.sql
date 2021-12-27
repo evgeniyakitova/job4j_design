@@ -21,13 +21,18 @@ on dep.id = emp.department_id;
 select * from departments dep right join employees emp
 on dep.id = emp.department_id;
 
-select * from employees emp left join departments dep
-on dep.id = emp.department_id;
-
 select * from departments dep full join employees emp
 on dep.id = emp.department_id;
 
 select * from departments dep cross join employees emp;
+
+select emp.name, dep.name as departament
+from departments dep right join employees emp
+on dep.id = emp.department_id;
+
+select emp.name, dep.name as departament
+from employees emp left join departments dep
+on dep.id = emp.department_id;
 
 select dep.name from departments dep left join employees emp
 on dep.id = emp.department_id
