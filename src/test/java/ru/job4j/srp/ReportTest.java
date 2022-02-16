@@ -30,36 +30,16 @@ public class ReportTest {
     @Test
     public void whenHtmlReportGenerated() {
         MemStore store = new MemStore();
-        String start = """
-                <html>
-                 <head>
-                  <meta content="text/html; charset=utf-8">
-                  <title>Report</title>
-                 </head>
-                 <body>
-                  <table>
-                   <tr>
-                    <th>Name</th>
-                    <th>Hired</th>
-                    <th>Fired</th>
-                    <th>Salary</th>
-                   </tr>
-                """;
-        String end = """
-                 </table>
-                 </body>
-                </html>
-                """;
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
         Report report = new HtmlReport(store);
-        StringBuilder expect = new StringBuilder(start);
+        StringBuilder expect = new StringBuilder(HtmlReport.START);
         expect.append("<tr><td>").append(worker.getName()).append("</td>")
                 .append("<td>").append(worker.getHired()).append("</td>")
                 .append("<td>").append(worker.getFired()).append("</td>")
                 .append("<td>").append(worker.getSalary()).append("</td></tr>")
-                .append(end);
+                .append(HtmlReport.END);
         assertThat(report.generate(em -> true), is(expect.toString()));
     }
 
@@ -70,7 +50,7 @@ public class ReportTest {
         Employee worker = new Employee("Ivan", now, now, 6400);
         store.add(worker);
         Report report = new DollarSalaryReport(store);
-        double salary = worker.getSalary() / 80;
+        double salary = worker.getSalary() / DollarSalaryReport.DOLLAR_RATE;
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary")
                 .append(System.lineSeparator())

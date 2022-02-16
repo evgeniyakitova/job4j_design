@@ -3,6 +3,8 @@ package ru.job4j.srp;
 import java.util.function.Predicate;
 
 public class DollarSalaryReport implements Report {
+    public static final double DOLLAR_RATE = 75.5;
+
     private Store store;
 
     public DollarSalaryReport(Store store) {
@@ -15,7 +17,7 @@ public class DollarSalaryReport implements Report {
         text.append("Name; Hired; Fired; Salary");
         text.append(System.lineSeparator());
         for (Employee employee : store.findBy(filter)) {
-            double salary = employee.getSalary() / 80;
+            double salary = employee.getSalary() / DOLLAR_RATE;
             text.append(employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
                     .append(employee.getFired()).append(";")

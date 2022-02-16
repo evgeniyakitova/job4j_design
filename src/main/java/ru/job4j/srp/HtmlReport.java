@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.function.Predicate;
 
 public class HtmlReport implements Report {
-    private final String start = """
+    public static final String START = """
                 <html>
                  <head>
                   <meta content="text/html; charset=utf-8">
@@ -19,7 +19,7 @@ public class HtmlReport implements Report {
                     <th>Salary</th>
                    </tr>
                 """;
-    private final String end = """
+    public static final String END = """
                  </table>
                  </body>
                 </html>
@@ -33,7 +33,7 @@ public class HtmlReport implements Report {
 
     @Override
     public String generate(Predicate<Employee> filter) {
-        StringBuilder report = new StringBuilder(start);
+        StringBuilder report = new StringBuilder(START);
         for (Employee employee : store.findBy(filter)) {
             report.append("<tr><td>").append(employee.getName()).append("</td>")
                     .append("<td>").append(employee.getHired()).append("</td>")
@@ -41,7 +41,7 @@ public class HtmlReport implements Report {
                     .append("<td>").append(employee.getSalary()).append("</td></tr>");
 
         }
-        report.append(end);
+        report.append(END);
         return report.toString();
     }
 
