@@ -2,6 +2,7 @@ package ru.job4j.srp;
 
 import org.junit.Test;
 
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 
 import static org.hamcrest.Matchers.is;
@@ -81,5 +82,70 @@ public class ReportTest {
                 .append(secondWorker.getSalary()).append(";")
                 .append(System.lineSeparator());
         assertThat(report.generate(em -> true), is(expect.toString()));
+    }
+
+    @Test
+    public void whenXMLReportGenerated() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee employee = new Employee("Anna", now, now, 7000);
+        store.add(employee);
+        OffsetDateTime dateTime = OffsetDateTime.ofInstant(now.toInstant(), now.getTimeZone().toZoneId());
+        String template = """
+                <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                <employees>
+                    <employee>
+                        <name>%s</name>
+                        <hired>%s</hired>
+                        <fired>%s</fired>
+                        <salary>%s</salary>
+                    </employee>
+                </employees>
+                """.formatted(employee.getName(),
+                dateTime,
+                dateTime,
+                employee.getSalary());
+        Report report = new XMLReport(store);
+        assertThat(report.generate(em -> true), is(template));
+    }
+
+    @Test
+    public void whenJsonReportGenerated() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee employee = new Employee("Anna", now, now, 7000);
+        store.add(employee);
+        String template = """
+                [
+                  {
+                    "name": "%1$s",
+                    "hired": {
+                      "year": %2$s,
+                      "month": %3$s,
+                      "dayOfMonth": %4$s,
+                      "hourOfDay": %5$s,
+                      "minute": %6$s,
+                      "second": %7$s
+                    },
+                    "fired": {
+                      "year": %2$s,
+                      "month": %3$s,
+                      "dayOfMonth": %4$s,
+                      "hourOfDay": %5$s,
+                      "minute": %6$s,
+                      "second": %7$s
+                    },
+                    "salary": %8$s
+                  }
+                ]""".formatted(employee.getName(),
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH),
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                now.get(Calendar.SECOND),
+                employee.getSalary());
+        Report report = new JsonReport(store);
+        assertThat(report.generate(em -> true), is(template));
     }
 }
