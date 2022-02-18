@@ -27,7 +27,7 @@ public class Shop implements Store {
     }
 
     public List<Food> getAll() {
-        return food;
+        return List.copyOf(food);
     }
 
     public void clear() {
