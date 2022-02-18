@@ -7,15 +7,19 @@ public class Shop implements Store {
     private final List<Food> food = new ArrayList<>();
 
     public boolean add(Food product) {
-        double rate = getSpoilRate(product);
-        boolean result = rate >= 25 && rate < 100;
+        boolean result = accept(product);
         if (result) {
-            if (rate > 75) {
+            if (getSpoilRate(product) > 75) {
                 product.setDiscount(0.5);
             }
             food.add(product);
         }
         return result;
+    }
+
+    public boolean accept(Food product) {
+        double rate = getSpoilRate(product);
+        return rate >= 25 && rate < 100;
     }
 
     public void delete(Food product) {

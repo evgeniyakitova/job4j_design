@@ -8,6 +8,8 @@ import  static java.time.temporal.ChronoUnit.MILLIS;
 public interface Store {
     boolean add(Food food);
 
+    boolean accept(Food food);
+
     void delete(Food food);
 
     List<Food> getAll();

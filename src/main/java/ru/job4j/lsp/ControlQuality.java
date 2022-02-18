@@ -11,7 +11,8 @@ public class ControlQuality {
 
     public void addFood(Food product) {
         for (Store store : storages) {
-            if (store.add(product)) {
+            if (store.accept(product)) {
+                store.add(product);
                 break;
             }
         }

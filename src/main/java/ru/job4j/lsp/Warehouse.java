@@ -7,12 +7,15 @@ public class Warehouse implements Store {
     private final List<Food> food = new ArrayList<>();
 
     public boolean add(Food product) {
-        double rate = getSpoilRate(product);
-        boolean result = rate < 25;
+        boolean result = accept(product);
         if (result) {
             food.add(product);
         }
         return result;
+    }
+
+    public boolean accept(Food product) {
+        return getSpoilRate(product) < 25;
     }
 
     public void delete(Food product) {

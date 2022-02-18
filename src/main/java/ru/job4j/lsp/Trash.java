@@ -7,12 +7,15 @@ public class Trash implements Store {
     private final List<Food> food = new ArrayList<>();
 
     public boolean add(Food product) {
-        double rate = getSpoilRate(product);
-        boolean result = rate >= 100;
+        boolean result = accept(product);
         if (result) {
             food.add(product);
         }
         return result;
+    }
+
+    public boolean accept(Food product) {
+        return getSpoilRate(product) >= 100;
     }
 
     public void delete(Food product) {
@@ -20,7 +23,7 @@ public class Trash implements Store {
     }
 
     public List<Food> getAll() {
-        return food;
+        return List.copyOf(food);
     }
 
     public void clear() {
