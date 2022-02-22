@@ -18,24 +18,11 @@ public abstract class Car {
         return brand;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
     public int getSize() {
         return size;
     }
 
-    public void setSize(int size) {
-        validate(size);
-        this.size = size;
-    }
-
     public int getProductionYear() {
         return productionYear;
-    }
-
-    public void setProductionYear(int productionYear) {
-        this.productionYear = productionYear;
     }
 }

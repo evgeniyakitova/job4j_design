@@ -1,8 +1,10 @@
 package ru.job4j.lsp.parking;
 
 public class PassengerCar extends Car {
-    public PassengerCar(String brand, int size, int productionYear) {
-        super(brand, size, productionYear);
+    private static final int SIZE = 1;
+
+    public PassengerCar(String brand, int productionYear) {
+        super(brand, SIZE, productionYear);
     }
 
     @Override
