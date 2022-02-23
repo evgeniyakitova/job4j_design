@@ -4,34 +4,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyParking implements Parking {
-    private int passengerCars;
+    private int carPlaces;
 
-    private int trucks;
+    private int truckPlaces;
 
-    private List<Car> cars = new ArrayList<>();
+    private List<Car> passengerCars = new ArrayList<>();
 
-    public MyParking(int passengerCarsCount, int trucksCount) {
-        this.passengerCars = passengerCarsCount;
-        this.trucks = trucksCount;
+    private List<Car> trucks = new ArrayList<>();
+
+    public MyParking(int carPlaces, int truckPlaces) {
+        this.carPlaces = carPlaces;
+        this.truckPlaces = truckPlaces;
     }
 
     @Override
     public boolean park(Car car) {
-        return false;
+        boolean result = isAvailable(car);
+        if (result) {
+            if (car.getSize() == PassengerCar.SIZE || truckPlaces == 0) {
+                passengerCars.add(car);
+                carPlaces = carPlaces - car.getSize();
+            } else {
+                trucks.add(car);
+                truckPlaces--;
+            }
+        }
+        return result;
     }
 
     @Override
     public void freeUp(Car car) {
-
+        if (passengerCars.remove(car)) {
+            carPlaces = carPlaces + car.getSize();
+        } else if (trucks.remove(car)) {
+            truckPlaces++;
+        }
     }
 
     @Override
     public boolean isAvailable(Car car) {
-        return false;
+        int size = car.getSize();
+        boolean result;
+        if (size == PassengerCar.SIZE) {
+            result = carPlaces > 0;
+        } else {
+            result = truckPlaces > 0 || carPlaces >= size;
+        }
+        return result;
     }
 
     @Override
     public List<Car> getAll() {
-        return null;
+        List<Car> result = new ArrayList<>();
+        result.addAll(passengerCars);
+        result.addAll(trucks);
+        return result;
     }
 }
